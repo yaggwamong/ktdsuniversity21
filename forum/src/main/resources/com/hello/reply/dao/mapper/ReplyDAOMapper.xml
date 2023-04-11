@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Reply">
+	
+	<insert id="createNewReply"
+			parameterType="com.hello.reply.vo.ReplyVO">
+		INSERT INTO REPLIES
+         (REPLY_ID
+        , TOPIC_ID
+        , REPLY
+        , EMAIL
+        , CRT_DT
+        , MDFY_DT
+        , PRNT_REPLY_ID)
+        VALUES
+         (SEQ_REPLIES_PK.NEXTVAL
+        , #{topicId}
+        , #{reply}
+        , #{email}
+        , SYSDATE
+        , SYSDATE
+        , #{prntReplyId})
+	</insert>
+	
+	<update id="updateOneReply"
+			parameterType="com.hello.reply.vo.ReplyVO">
+		UPDATE REPLIES
+           SET REPLY = #{reply}
+             , MDFY_DT = SYSDATE
+         WHERE REPLY_ID = #{replyId}
+	</update>
+	
+	<delete id="deleteOneReplyById"
+			parameterType="_int">
+		DELETE FROM REPLIES
+         WHERE REPLY_ID = #{_parameter}
+	</delete>
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Attach">
+
+	<insert id="createAttachFile"
+			parameterType="com.hello.attachfile.vo.AttachFileVO">
+		INSERT INTO BOARD.ATTACHED_FILES
+         (FILE_ID
+        , TOPIC_ID
+        , ORIGIN_FILE_NAME
+        , UUID_FILE_NAME
+        , FILE_SIZE
+        , FILE_EXT)
+        VALUES
+         (SEQ_ATTACHED_FILES_PK.NEXTVAL
+        , #{topicId}
+        , #{originFileName}
+        , #{uuidFileName}
+        , #{fileSize}
+        , #{fileExt})
+	</insert>
+	
+	<select id="readOneAttachFileByTopicIdAndFileId"
+			parameterType="com.hello.attachfile.vo.AttachFileVO"
+			resultType="com.hello.attachfile.vo.AttachFileVO">
+		SELECT FILE_ID
+		     , TOPIC_ID
+		     , ORIGIN_FILE_NAME
+		     , UUID_FILE_NAME
+		     , FILE_SIZE
+		     , FILE_EXT
+          FROM BOARD.ATTACHED_FILES
+         WHERE TOPIC_ID = #{topicId}
+           AND FILE_ID = #{fileId}
+	</select>
+
+	<select id="readOneAttachFileByUUIDByFileId"
+			parameterType="_long"
+			resultType="string">
+		SELECT UUID_FILE_NAME
+		  FROM ATTACHED_FILES
+		 WHERE FILE_ID = #{fileId}
+	</select>
+
+	<delete id="deleteOneAttachFileByFileId"
+			parameterType="_long">
+		DELETE FROM BOARD.ATTACHED_FILES
+         WHERE FILE_ID = #{_parameter}
+	</delete>
+
+</mapper>

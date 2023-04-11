@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+body {
+	margin: 0px;
+}
+
+* {
+	font-size: 12px;
+	color: #333;
+}
+
+a {
+	color: #555;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #555;
+}
+
+a:active {
+	color: #555;
+}
+
+a:visited {
+	color: #555;
+}

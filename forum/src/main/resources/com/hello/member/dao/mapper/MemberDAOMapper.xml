@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 원래 namespace에는 패키지명을 적는다 -->
+<mapper namespace="Member">
+	
+	<!-- id에는 insert 메소드명을, parameterType에는 타입의 경로를 복사+붙혀넣기한다 -->
+	<insert id="createNewMember" 
+	         parameterType="com.hello.member.vo.MemberVO">
+		INSERT INTO BOARD.MEMBERS
+         (EMAIL
+        , NAME
+        , PASSWORD)
+        VALUES
+         (#{email}
+        , #{name}
+        , #{password})
+	</insert>
+	
+	<!-- resultType="~" : ~ 타입으로 값을 반환하겠다 -->
+	<select id="readCountMemberByEmail"
+	         parameterType="string"
+	         resultType="_int">
+		SELECT COUNT(1)
+          FROM BOARD.MEMBERS
+         WHERE EMAIL = #{_parameter}
+	</select>
+	
+	<!-- MyBatis 내부에서 getter/setter를 호출해서 알아서 바인딩을 함 -->
+	<!-- VO에 getter/setter가 없으면 오류 발생 -->
+	<select id="readOneMembeByEmailAndPassword"
+			parameterType="com.hello.member.vo.MemberVO"
+			resultType="com.hello.member.vo.MemberVO">
+		SELECT EMAIL
+		     , NAME
+		     , PASSWORD
+		  FROM BOARD.MEMBERS
+		 WHERE EMAIL = #{email}
+		   AND PASSWORD = #{password}
+	</select>
+	
+	
+</mapper>

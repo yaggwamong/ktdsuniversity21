@@ -1,0 +1,46 @@
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>▶ %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<!-- 패스정보를 적어 줘야 한다 : C:/logs/forum/ -->
+    <file>C:/logs/forum/logFile.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- daily rollover -->
+      <!-- 여기도 패스정보를 적어 줘야 한다 -->
+      <fileNamePattern>C:/logs/forum/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+      <!-- keep 30 days' worth of history capped at 3GB total size -->
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>▶ %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern>
+    </encoder>
+  </appender> 
+
+<!-- 2. 콘솔은 debug까지 보고 싶고, file은 info만 쌓고 싶다면? -->
+<!-- appender를 따로 빼서 설정하고 logger로 추가하면 된다 -->
+
+<!-- 로거를 쓰는 대상의 패키지가 com.hello로 시작하면 info로 로그를 써라 -->
+  <!-- <logger name="com.hello" level="info"> -->
+  	<!-- <appender-ref ref="FILE" /> -->
+  <!-- </logger> -->
+
+<!-- 로거를 쓰는 대상의 패키지가 org.springframework로 시작하면 debug로 로그를 써라 -->
+  <!-- <logger name="org.springframework" level="debug"> -->
+  	<!-- <appender-ref ref="STDOUT" /> -->
+  <!-- </logger> -->
+
+
+  <!-- 1. 로그의 최상위 설정 -->
+  <!-- STDOUT만 되어 있으면 콘솔에만 나온다 - 로그 파일이 필요하면 FILE로 바꿔 줘야 한다 -->
+  <root level="debug">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
+  </root>
+</configuration>
